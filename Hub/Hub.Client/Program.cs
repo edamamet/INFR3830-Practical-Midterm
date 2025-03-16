@@ -1,7 +1,22 @@
-﻿namespace Hub.Client;
+﻿using System.Net;
+namespace Hub.Client;
 
-class Program {
+internal abstract class Program {
+    static TextClient textClient = new();
     static void Main(string[] args) {
-        Console.WriteLine("Hello, World!");
+        textClient = new();
+        textClient.Initialize(IPAddress.Loopback, 6969);
+
+        for (;;) {
+            Console.Write("> ");
+            var input = Console.ReadLine();
+            
+            if (string.IsNullOrWhiteSpace(input)) continue;
+            if (input == "exit") break;
+            
+            textClient.Send(input);
+        }
+
+        Console.ReadLine();
     }
 }

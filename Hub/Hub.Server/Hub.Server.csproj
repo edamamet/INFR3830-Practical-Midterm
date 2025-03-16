@@ -8,4 +8,8 @@
         <RootNamespace>Server.Server</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Hub.Hooks\Hub.Hooks.csproj" />
+    </ItemGroup>
+
 </Project>
