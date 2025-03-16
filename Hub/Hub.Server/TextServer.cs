@@ -6,7 +6,6 @@ namespace Server.Server;
 public class TextServer {
     const int BACKLOG = 32;
     const int BUFFER_SIZE = 1024;
-    const int TIMEOUT = 500;
 
     readonly Guid serverId = Guid.Empty;
 
@@ -29,8 +28,6 @@ public class TextServer {
         Console.WriteLine($"Listening on port {port}");
 
         server.BeginAccept(OnAccept, null);
-
-        SendLoop();
 
         Console.ReadLine();
     }
@@ -60,7 +57,10 @@ public class TextServer {
     /// This method is called when the server receives a message.
     /// </summary>
     void OnReceive(IAsyncResult result) {
-        var client = (Socket)result.AsyncState!;
+        if (result.AsyncState is not Socket client) {
+            Console.WriteLine("Could not send message.");
+            return;
+        }
         var bytesReceived = client.EndReceive(result);
 
         var messageBytes = new byte[bytesReceived];
@@ -76,6 +76,15 @@ public class TextServer {
         messages.Enqueue(message);
 
         client.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, OnReceive, client);
+
+        while(messages.Count > 0) {
+            var nextMessage = messages.Dequeue();
+            var bytes = message.SerializeMessage();
+            foreach (var c in clientIds.Keys) {
+                Console.WriteLine($"Sending: <{message}: {message.DeserializeText()}> to {clientIds[client]}");
+                c.BeginSend(bytes, 0, bytes.Length, SocketFlags.None, OnSend, c);
+            }
+        }
     }
 
     /// <summary>
@@ -83,22 +92,10 @@ public class TextServer {
     /// </summary>
     /// <param name="result"></param>
     void OnSend(IAsyncResult result) {
-        if (result.AsyncState is Socket client) {
-            client.EndSend(result);
+        if (result.AsyncState is not Socket client) {
+            Console.WriteLine("Could not send message.");
+            return;
         }
-    }
-
-    void SendLoop() {
-        for (;;) {
-            while(messages.Count > 0) {
-                var message = messages.Dequeue();
-                var bytes = message.SerializeMessage();
-                foreach (var client in clientIds.Keys) {
-                    Console.WriteLine($"Sending: <{message}: {message.DeserializeText()}> to {clientIds[client]}");
-                    client.BeginSend(bytes, 0, bytes.Length, SocketFlags.None, OnSend, client);
-                }
-            }
-            Thread.Sleep(TIMEOUT);
-        }
+        client.EndSend(result);
     }
 }
