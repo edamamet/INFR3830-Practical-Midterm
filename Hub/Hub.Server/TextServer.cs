@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using Hub.Hooks;
-namespace Server.Server;
+namespace Hub.Server;
 
 public class TextServer {
     const int BACKLOG = 32;
@@ -15,17 +15,17 @@ public class TextServer {
     Queue<Message> messages = [];
 
     public void Initialize(IPAddress address, int port) {
-        Console.WriteLine("Starting Server...");
+        Console.WriteLine("Starting Text Server...");
 
         buffer = new byte[BUFFER_SIZE];
-        server = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        server = new(address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
         clientIds = [];
         messages = [];
 
         server.Bind(new IPEndPoint(address, port));
         server.Listen(BACKLOG);
 
-        Console.WriteLine($"Listening on port {port}");
+        Console.WriteLine($"Text Server: Listening on port {port}");
 
         server.BeginAccept(OnAccept, null);
 
@@ -47,6 +47,8 @@ public class TextServer {
 
         // Accept the next connection
         server.BeginAccept(OnAccept, null);
+        
+        Console.WriteLine(client.RemoteEndPoint);
 
         var registrationMessage = MessageUtils.CreateRegistration(serverId, guid);
         var bytes = registrationMessage.SerializeMessage();
@@ -79,9 +81,9 @@ public class TextServer {
 
         while(messages.Count > 0) {
             var nextMessage = messages.Dequeue();
-            var bytes = message.SerializeMessage();
+            var bytes = nextMessage.SerializeMessage();
             foreach (var c in clientIds.Keys) {
-                Console.WriteLine($"Sending: <{message}: {message.DeserializeText()}> to {clientIds[client]}");
+                Console.WriteLine($"Sending: <{message}: {nextMessage.DeserializeText()}> to {clientIds[client]}");
                 c.BeginSend(bytes, 0, bytes.Length, SocketFlags.None, OnSend, c);
             }
         }
