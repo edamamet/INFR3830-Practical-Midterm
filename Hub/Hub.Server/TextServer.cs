@@ -72,7 +72,7 @@ public class TextServer {
         var expectedId = clientIds[client];
         if (message.SenderId != expectedId) return;
 
-        Console.WriteLine($"{message}: {message.Content.DeserializeText()}");
+        Console.WriteLine($"{message}: {message.DeserializeText()}");
         messages.Enqueue(message);
 
         client.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, OnReceive, client);
@@ -94,7 +94,7 @@ public class TextServer {
                 var message = messages.Dequeue();
                 var bytes = message.SerializeMessage();
                 foreach (var client in clientIds.Keys) {
-                    Console.WriteLine($"Sending: <{message}: {message.Content.DeserializeText()}> to {clientIds[client]}");
+                    Console.WriteLine($"Sending: <{message}: {message.DeserializeText()}> to {clientIds[client]}");
                     client.BeginSend(bytes, 0, bytes.Length, SocketFlags.None, OnSend, client);
                 }
             }

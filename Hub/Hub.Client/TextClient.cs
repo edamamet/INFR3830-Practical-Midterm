@@ -51,12 +51,12 @@ internal class TextClient {
 
         switch(message.Header) {
             case MessageType.Text: {
-                var text = message.Content.DeserializeText();
+                var text = message.DeserializeText();
                 Console.WriteLine($"{message}: {text}");
             }
                 break;
             case MessageType.Registration: {
-                clientId = message.Content.DeserializeGuid();
+                clientId = message.DeserializeGuid();
                 Console.WriteLine($"Registered with ID: {clientId}");
             }
                 break;
