@@ -26,3 +26,5 @@ Copy the Hub.Hooks.dll that was built in the previous step to the Unity Assets f
 cd .. # you should be in the midterm folder
 cp Hub/Hub.Hooks/bin/Debug/Hub.Hooks.dll Game/Assets/Hub.Hooks.dll
 ```
+
+You can now open the Unity project
