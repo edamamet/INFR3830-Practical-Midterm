@@ -2,7 +2,7 @@
 
 Go to the [releases](https://github.com/edamamet/INFR3830-Practical-Midterm/releases) page and download both the server and client zip files, then unpack both.
 
-Navigate to the server and launch `Hub.Client.exe`, followed by the game build `Game.exe`
+Navigate to the server and launch `Hub.Server.exe`, followed by the game build `Game.exe`
 
 ## Controls
 After inputting your IP (or selecting loopback), you can use WASD to move around, and Tab to toggle chat mode. You can send messages by using the input field in the bottom left
