@@ -53,7 +53,8 @@ internal class PositionClient {
     async Task StartSending() {
         for (;;) {
             try {
-                var messageBytes = MessageUtils.CreatePosition(clientId, 4, 0, 0).SerializeMessage()!;
+                var randomX = (float)new Random().NextDouble() * 10;
+                var messageBytes = MessageUtils.CreatePosition(clientId, randomX, 0, 0).SerializeMessage()!;
                 await client.SendToAsync(messageBytes, remoteEp);
                 Console.WriteLine($"Sent position to {remoteEp}");
             } catch (Exception e) {

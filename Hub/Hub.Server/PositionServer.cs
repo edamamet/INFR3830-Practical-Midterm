@@ -10,9 +10,9 @@ public class PositionServer {
     readonly Guid serverId = Guid.Empty;
 
     byte[] buffer = new byte[BUFFER_SIZE];
-    Socket server;
-    IPEndPoint localEp;
-    EndPoint client;
+    Socket server = new(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+    IPEndPoint localEp = new(IPAddress.Any, 8889);
+    EndPoint client = new IPEndPoint(IPAddress.Any, 0);
 
     Dictionary<EndPoint, ClientInformation> clientIds = new();
 

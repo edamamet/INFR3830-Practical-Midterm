@@ -68,7 +68,7 @@ public class TextServer {
         var messageBytes = new byte[bytesReceived];
         Buffer.BlockCopy(buffer, 0, messageBytes, 0, bytesReceived);
         var message = messageBytes.DeserializeMessage();
-
+        
         if (message.Header != MessageType.Text || message.SenderId == Guid.Empty) return;
 
         var expectedId = clientIds[client];

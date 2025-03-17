@@ -16,11 +16,11 @@ internal abstract class Program {
 
     static void InitializeTextServer() {
         textServer = new();
-        textServer.Initialize(IPAddress.Loopback, 6969);
+        textServer.Initialize(IPAddress.Loopback, 8888);
     }
     
     static void InitializePositionServer() {
         positionServer = new();
-        positionServer.Initialize(IPAddress.Loopback, 6970);
+        positionServer.Initialize(IPAddress.Loopback, 8889);
     }
 }

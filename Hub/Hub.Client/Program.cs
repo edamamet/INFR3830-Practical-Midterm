@@ -5,8 +5,8 @@ internal abstract class Program {
     static TextClient textClient = new();
     static PositionClient positionClient = new();
     static void Main(string[] args) {
-        textClient.Initialize(IPAddress.Loopback, 6969);
-        positionClient.Initialize(IPAddress.Loopback, 6970);
+        textClient.Initialize(IPAddress.Loopback, 8888);
+        positionClient.Initialize(IPAddress.Loopback, 8889);
 
         for (;;) {
             Console.Write("> ");
