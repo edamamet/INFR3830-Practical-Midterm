@@ -13,6 +13,7 @@ You will need .NET 9.0 and .NET 4.8, as well as Unity 6000.0.23f1.
 Clone the repo:
 ```bash
 git clone https://github.com/edamamet/INFR3830-Practical-Midterm midterm
+cd midterm
 ```
 
 Build the server:
