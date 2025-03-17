@@ -8,6 +8,9 @@ Navigate to the server and launch `Hub.Client.exe`, followed by the game build `
 After inputting your IP (or selecting loopback), you can use WASD to move around, and Tab to toggle chat mode. You can send messages by using the input field in the bottom left
 
 # Installation
+> [!IMPORTANT]  
+> This is not required to run the server/client. Only if you want to build and run from source
+
 You will need .NET 9.0 and .NET 4.8, as well as Unity 6000.0.23f1.
 
 Clone the repo:
