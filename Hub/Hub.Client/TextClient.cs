@@ -57,7 +57,7 @@ internal class TextClient {
                 break;
             case MessageType.Registration: {
                 clientId = message.DeserializeGuid();
-                Console.WriteLine($"Registered with ID: {clientId}");
+                Console.WriteLine($"Registered with TextID: {clientId}");
             }
                 break;
             case MessageType.Position:

@@ -3,9 +3,10 @@ namespace Hub.Client;
 
 internal abstract class Program {
     static TextClient textClient = new();
+    static PositionClient positionClient = new();
     static void Main(string[] args) {
-        textClient = new();
         textClient.Initialize(IPAddress.Loopback, 6969);
+        positionClient.Initialize(IPAddress.Loopback, 6970);
 
         for (;;) {
             Console.Write("> ");

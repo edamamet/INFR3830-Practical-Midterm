@@ -40,7 +40,7 @@ public class TextServer {
         var guid = Guid.NewGuid();
         clientIds.Add(client, guid);
 
-        Console.WriteLine($"Client connected with ID: {guid}");
+        Console.WriteLine($"Client connected with TextID: {guid}");
 
         // Start receiving data from the client
         client.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, OnReceive, client);
